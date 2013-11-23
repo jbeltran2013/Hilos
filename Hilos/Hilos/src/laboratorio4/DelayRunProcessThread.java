@@ -17,21 +17,24 @@ import java.io.InputStreamReader;
 public class DelayRunProcessThread extends Thread {
     public void run() {
     //
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 12; i++) {
     try {
     // 10000 ms
         Thread.sleep(10000);
     } catch (InterruptedException e) {
         e.printStackTrace();
     }   
-        LeeProcesos(i);
+        LeeProcesos(i+1);
         //Limpiar Pantalla
     }
   }
     
   static public void LeeProcesos(int i){
       try {
-        Process proceso = Runtime.getRuntime().exec("ps -ef");
+        System.out.println(i+"º Corrida en: "+i*10+" Seg.");
+        System.out.println("=====================");
+        //Process proceso = Runtime.getRuntime().exec("ps -ef"); //para linux
+        Process proceso = Runtime.getRuntime().exec("tasklist"); //para windows
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(
         proceso.getInputStream()));
         BufferedReader stdError = new BufferedReader(new InputStreamReader(
@@ -45,7 +48,7 @@ public class DelayRunProcessThread extends Thread {
         while ((s = stdError.readLine()) != null) {
         System.out.println(s);
     }
-        System.exit(0);
+        //System.exit(0);
     } catch (IOException e) {
         e.printStackTrace();
     }
